@@ -8,6 +8,16 @@ Never commit credentials or real wallet keys. Contributions use the project's MI
 
 Who can create, change, or remove entries is defined by the project's access control model, documented in the access control ADR (see `docs/adr/`). Review the documented roles and permissions before changing any state-mutating function, and keep the documentation in sync with the code when access rules change.
 
+## Contract interface changes
+
+If your change modifies the contract interface (functions, events, errors, or structs), regenerate the published ABI so downstream consumers stay in sync:
+
+1. Run `forge build`.
+2. Run `scripts/export-abi.sh` to export the ABI as JSON.
+3. Commit the regenerated `abi/ShortlistRegistry.json` alongside your change.
+
+The ABI file is versioned and attached to each release, so keeping it up to date in the same pull request ensures a stable interface for backend and frontend consumers.
+
 ## Tests
 
 Keep the test suite up to date with your change. In particular, every pull request must preserve and extend tests covering:
